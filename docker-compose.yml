@@ -1,0 +1,22 @@
+version: "3.7"
+
+services:
+  app:
+    build:
+      context: code
+      target: app_dev
+    volumes:
+      - ./code:/app
+    extra_hosts:
+      - host.docker.internal:host-gateway
+
+  caddy:
+    image: caddy:2.7
+    environment:
+      SERVER_NAME: ${CADDY_SERVER_NAME}
+      APP_URL: ${CADDY_APP_URL}
+    ports:
+      - ${CADDY_EXPOSE_HTTP:-80}:80
+    volumes:
+      - ./code/docker/caddy/Caddyfile:/etc/caddy/Caddyfile
+      - ./code:/app

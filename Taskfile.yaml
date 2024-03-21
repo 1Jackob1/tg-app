@@ -1,0 +1,60 @@
+version: '3'
+
+vars:
+  DC_FILE: -f ./docker-compose.yml
+  PROD_APP_TARGET: app_dev
+  PROD_APP_TAG: jackobsmonarch/tg-app:latest
+  PROD_CADDY_TARGET: caddy
+  PROD_CADDY_TAG: jackobsmonarch/tg-app-caddy:latest
+
+tasks:
+  default:
+    cmd: task --list
+
+  up:
+    desc: Alias for `docker compose {{.DC_FILE}} up -d {{.CLI_ARGS}}`
+    cmd: docker compose {{.DC_FILE}} up -d {{.CLI_ARGS}}
+
+  ps:
+    desc: Alias for `docker compose {{.DC_FILE}} ps`
+    cmd: docker compose {{.DC_FILE}} ps
+
+  shell:
+    desc: Alias for `docker compose {{.DC_FILE}} exec app bash`
+    cmd: docker compose {{.DC_FILE}} exec app bash
+
+  down:
+    desc: Alias for `docker compose {{.DC_FILE}} down`
+    cmd: docker compose {{.DC_FILE}} down {{.CLI_ARGS}}
+
+  build:
+    desc: Alias for `docker compose {{.DC_FILE}} build {{.CLI_ARGS}}`
+    cmd: docker compose {{.DC_FILE}} build {{.CLI_ARGS}}
+
+  logs:
+    desc: Alias for `docker compose {{.DC_FILE}} logs -f {{.CLI_ARGS}}`
+    cmd: docker compose {{.DC_FILE}} logs -f {{.CLI_ARGS}}
+
+  push-app:
+    desc: Build docker image with target `{{.PROD_APP_TARGET}}`, tag it with `{{.PROD_APP_TAG}}` and push to hub.docker.com
+    cmds:
+      - docker build --file=./code/Dockerfile --target={{.PROD_APP_TARGET}} --tag={{.PROD_APP_TAG}} ./code
+      - docker push {{.PROD_APP_TAG}}
+
+  push-caddy:
+    desc: Build docker image with target `{{.PROD_CADDY_TARGET}}`, tag it with `{{.PROD_CADDY_TAG}}` and push to hub.docker.com
+    cmds:
+      - docker build --file=./code/Dockerfile --target={{.PROD_CADDY_TARGET}} --tag={{.PROD_CADDY_TAG}} ./code
+      - docker push {{.PROD_CADDY_TAG}}
+
+  fix-cs:
+    desc: Run cs fixer
+    cmd: docker compose {{.DC_FILE}} exec app php vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --allow-risky=yes
+
+  phpstan:
+    desc: Run phpstan - static code analyzer
+    cmd: docker compose {{.DC_FILE}} exec app php vendor/bin/phpstan analyse
+
+  tests:
+    desc: Run phpunit all tests
+    cmd: docker compose {{.DC_FILE}} exec app php bin/phpunit
