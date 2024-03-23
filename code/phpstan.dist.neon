@@ -3,6 +3,9 @@ parameters:
     paths:
         - src/
 
+    excludePaths:
+        - src/SymfonySerializer/Normalizer/CarbonNormalizer.php
+
     symfony:
         containerXmlPath: var/cache/dev/App_KernelDevDebugContainer.xml
 #        consoleApplicationLoader: tests/console-application.php
