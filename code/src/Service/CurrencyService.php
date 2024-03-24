@@ -110,7 +110,6 @@ readonly class CurrencyService
             $cacheData[$pairCacheKey] = number_format(
                 num: $rate,
                 decimals: 4,
-                decimal_separator: ',',
                 thousands_separator: '',
             );
         }
