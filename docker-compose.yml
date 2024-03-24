@@ -7,6 +7,7 @@ services:
       target: app_dev
     volumes:
       - ./code:/app
+      - ./.docker-vols/phpstorm:/opt/phpstorm-coverage
     extra_hosts:
       - host.docker.internal:host-gateway
 
@@ -20,3 +21,16 @@ services:
     volumes:
       - ./code/docker/caddy/Caddyfile:/etc/caddy/Caddyfile
       - ./code:/app
+
+  redis:
+      image: redis:7.2.4
+      environment:
+          REDIS_PASSWORD: password
+      command:
+          - /bin/sh
+          - -c
+          - redis-server --requirepass "$${REDIS_PASSWORD:?REDIS_PASSWORD variable is not set}"
+      ports:
+          - ${REDIS_EXPOSE_PORT:-6379}:6379
+      volumes:
+          - ./.docker-vols/redis:/data

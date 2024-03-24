@@ -1,0 +1,20 @@
+{
+  "meta": {
+    "code": 200,
+    "disclaimer": "Usage subject to terms: https:\/\/currencybeacon.com\/terms"
+  },
+  "response": {
+    "date": "2024-03-13T12:32:31Z",
+    "base": "RUB",
+    "rates": {
+      "AED": 0.04009826,
+      "THB": 0.38954646
+    }
+  },
+  "date": "2024-03-13T12:32:31Z",
+  "base": "RUB",
+  "rates": {
+    "AED": 0.04009826,
+    "THB": 0.38954646
+  }
+}

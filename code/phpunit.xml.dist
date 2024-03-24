@@ -27,6 +27,10 @@
         <include>
             <directory suffix=".php">src</directory>
         </include>
+        <exclude>
+<!--            It's not mine btw -->
+            <file>src/SymfonySerializer/Normalizer/CarbonNormalizer.php</file>
+        </exclude>
     </coverage>
 
     <listeners>
