@@ -1,7 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
+use Symfony\Bundle\TwigBundle\TwigBundle;
+use Symfony\Bundle\WebProfilerBundle\WebProfilerBundle;
+
 return [
-    Symfony\Bundle\FrameworkBundle\FrameworkBundle::class => ['all' => true],
-    Symfony\Bundle\TwigBundle\TwigBundle::class => ['all' => true],
-    Symfony\Bundle\WebProfilerBundle\WebProfilerBundle::class => ['dev' => true, 'test' => true],
+    FrameworkBundle::class   => ['all' => true],
+    TwigBundle::class        => ['all' => true],
+    WebProfilerBundle::class => ['dev' => true, 'test' => true],
 ];

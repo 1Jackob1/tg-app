@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Client\CurrencyBean\CurrencyBeaconConnector;
-use App\Client\CurrencyBean\Request\CurrencyBeaconLatestRequest;
 use App\RequestDto\CurrencyExchangeRateActionRequestDto;
+use App\Service\CurrencyService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,15 +24,9 @@ class CurrencyExchangeRateAction extends AbstractController
     public function __invoke(
         #[MapQueryString]
         CurrencyExchangeRateActionRequestDto $requestDto,
-        CurrencyBeaconConnector $connector,
+        CurrencyService $service,
     ): Response {
-        $request = new CurrencyBeaconLatestRequest(
-            $requestDto->base,
-            $requestDto->to,
-            $connector,
-        );
-
-        $result = $request->execute();
+        $result = $service->getRate($requestDto);
 
         return new JsonResponse([
             'base' => $result->base,
