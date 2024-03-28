@@ -8,6 +8,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "nesbot/carbon": "^3.1",
+        "phpdocumentor/reflection-docblock": "^5.3",
         "saloonphp/rate-limit-plugin": "^2.0",
         "saloonphp/saloon": "^3.0",
         "symfony/cache": "7.0.*",
