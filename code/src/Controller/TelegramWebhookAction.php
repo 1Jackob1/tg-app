@@ -1,20 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
-use App\Client\Telegram\Request\TelegramSendMessageRequest;
-use App\Client\Telegram\TelegramConnector;
-use App\RequestDto\Telegram\TelegramMessageDto;
 use App\RequestDto\Telegram\TelegramUpdateDto;
-use App\Service\CurrencyService;
 use App\Service\Telegram\TelegramWebhookHandler;
-use Saloon\Http\Connector;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
+use Throwable;
 
 #[AsController]
 class TelegramWebhookAction extends AbstractController
@@ -27,7 +25,7 @@ class TelegramWebhookAction extends AbstractController
     {
         try {
             $handler->handle($requestDto);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             file_put_contents(__DIR__ . '/error.json', json_encode([
                 $e->getMessage(),
                 $e->getTrace(),

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Client\Telegram;
 
 use App\AppParametersContainer;
@@ -16,7 +18,7 @@ class TelegramConnector extends Connector
     public function __construct(AppParametersContainer $appParametersContainer)
     {
         $this->baseUri = $appParametersContainer->telegramBaseUri;
-        $this->apikey = $appParametersContainer->telegramApiKey;
+        $this->apikey  = $appParametersContainer->telegramApiKey;
     }
 
     public function resolveBaseUrl(): string

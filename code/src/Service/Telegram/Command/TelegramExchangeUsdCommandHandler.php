@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service\Telegram\Command;
 
 use App\RequestDto\CurrencyExchangeRateActionRequestDto;
-use App\RequestDto\Telegram\TelegramMessageEntityDto;
 use App\RequestDto\Telegram\TelegramMessageEntityTypeEnum;
 use App\RequestDto\Telegram\TelegramUpdateDto;
 use App\Service\CurrencyService;
@@ -11,9 +12,9 @@ use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 
 // somehow find to auto-inject it to tg webhook handler
 #[AutoconfigureTag('app.telegram_exchange_command_handler')]
-readonly class TelegramExchangeCommandHandler
+readonly class TelegramExchangeUsdCommandHandler
 {
-    public const COMMAND = '/exchange';
+    public const COMMAND = '#\/exchange_(?<currency>(usd|rub|thb))$#';
 
     public function __construct(
         private CurrencyService $currencyService,
@@ -32,7 +33,7 @@ readonly class TelegramExchangeCommandHandler
         }
 
         $command = mb_substr($messageDto->text, $messageEntityDto->offset, $messageEntityDto->length);
-        if ($command !== self::COMMAND) {
+        if (preg_match(self::COMMAND, $command) !== 1) {
             return false;
         }
 
@@ -45,25 +46,24 @@ readonly class TelegramExchangeCommandHandler
             return null;
         }
 
-        $parts = explode(' ', $updateDto->message->text);
-
         $requestDto = new CurrencyExchangeRateActionRequestDto();
-        $base = $parts[1];
-        $to = $parts[2];
 
-        $requestDto->base = $base;
-        $requestDto->to = [$to];
+        $matches = [];
+        preg_match(self::COMMAND, $updateDto->message->text, $matches);
 
-        $rate = $this->currencyService->getRate($requestDto);
+        $requestDto->base = strtoupper($matches['currency']);
+        $requestDto->to   = array_diff(['RUB', 'THB', 'USD'], [$requestDto->base]);
 
-        return sprintf(
-            "Курс обмена между %s и %s равен:\n1 %s = %.4F %s\nДанные на момент: %s",
-            $base,
-            $to,
-            $base,
-            $rate->rates[$to],
-            $to,
-            $rate->date->format('Y-m-d H:i:s')
-        );
+        $rateResponse = $this->currencyService->getRate($requestDto);
+
+        $result = "Курс для {$requestDto->base}:\n";
+
+        foreach ($rateResponse->rates as $currency => $rate) {
+            $result .= sprintf("1 %s = %.4F %s\n", $rateResponse->base, $rate, $currency);
+        }
+
+        $result .= sprintf("Данные на момент: %s\n", $rateResponse->date->format('Y-m-d H:i:s'));
+
+        return $result;
     }
 }

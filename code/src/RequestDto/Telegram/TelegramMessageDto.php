@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\RequestDto\Telegram;
 
 use Carbon\CarbonImmutable;
@@ -8,7 +10,7 @@ use Symfony\Component\Serializer\Attribute\Context;
 class TelegramMessageDto
 {
     public int $messageId;
-    public ?int $messageThreadId = null;
+    public ?int $messageThreadId  = null;
     public ?TelegramUserDto $from = null;
 
     #[Context([
