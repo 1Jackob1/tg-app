@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\RequestDto\Telegram\TelegramUpdateDto;
 use App\Service\Telegram\TelegramWebhookHandler;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,17 +22,19 @@ class TelegramWebhookAction extends AbstractController
         path: '/telegram-app/webhook',
         methods: [Request::METHOD_GET, Request::METHOD_POST],
     )]
-    public function __invoke(Request $r, #[MapRequestPayload] TelegramUpdateDto $requestDto, TelegramWebhookHandler $handler): JsonResponse
-    {
+    public function __invoke(
+        #[MapRequestPayload]
+        TelegramUpdateDto $requestDto,
+        TelegramWebhookHandler $handler,
+        LoggerInterface $logger,
+    ): JsonResponse {
         try {
             $handler->handle($requestDto);
         } catch (Throwable $e) {
-            file_put_contents(__DIR__ . '/error.json', json_encode([
-                $e->getMessage(),
-                $e->getTrace(),
-                $requestDto,
-                $r->getContent(),
-            ]));
+            $logger->error('[TG_ERROR_01]Unable to handle tg webhook: ' . $e->getMessage(), [
+                'error_class' => $e::class,
+                'error_trace' => $e->getTrace(),
+            ]);
         }
 
         return new JsonResponse([]);
