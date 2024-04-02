@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 
 // somehow find to auto-inject it to tg webhook handler
 #[AutoconfigureTag('app.telegram_exchange_command_handler')]
-readonly class TelegramExchangeUsdCommandHandler
+readonly class TelegramExchangeCommandHandler
 {
     public const COMMAND = '#\/exchange_(?<currency>(usd|rub|thb))$#';
 

@@ -7,12 +7,12 @@ namespace App\Service\Telegram;
 use App\Client\Telegram\Request\TelegramSendMessageRequest;
 use App\Client\Telegram\TelegramConnector;
 use App\RequestDto\Telegram\TelegramUpdateDto;
-use App\Service\Telegram\Command\TelegramExchangeUsdCommandHandler;
+use App\Service\Telegram\Command\TelegramExchangeCommandHandler;
 
 class TelegramWebhookHandler
 {
     public function __construct(
-        private TelegramExchangeUsdCommandHandler $commandHandler,
+        private TelegramExchangeCommandHandler $commandHandler,
         private TelegramConnector $telegramConnector,
     ) {}
 
