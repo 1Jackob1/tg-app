@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Controller;
 
-use App\Client\CurrencyBean\CurrencyBeaconConnector;
+use App\Client\CurrencyBeacon\CurrencyBeaconConnector;
 use App\Tests\AppTestCase;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;

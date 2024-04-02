@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\Client\CurrencyBean\CurrencyBeaconConnector;
-use App\Client\CurrencyBean\Request\CurrencyBeaconLatestRequest;
-use App\Client\CurrencyBean\Response\CurrencyBeaconLatestResponse;
+use App\Client\CurrencyBeacon\CurrencyBeaconConnector;
+use App\Client\CurrencyBeacon\Request\CurrencyBeaconLatestRequest;
+use App\Client\CurrencyBeacon\Response\CurrencyBeaconLatestResponse;
 use App\RequestDto\CurrencyExchangeRateActionRequestDto;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;

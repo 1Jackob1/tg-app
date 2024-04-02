@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Tests\Service;
 
 use App\AppParametersContainer;
-use App\Client\CurrencyBean\CurrencyBeaconConnector;
-use App\Client\CurrencyBean\Request\CurrencyBeaconLatestRequest;
+use App\Client\CurrencyBeacon\CurrencyBeaconConnector;
+use App\Client\CurrencyBeacon\Request\CurrencyBeaconLatestRequest;
 use App\RequestDto\CurrencyExchangeRateActionRequestDto;
 use App\Service\CurrencyService;
 use App\Tests\AppTestCase;
