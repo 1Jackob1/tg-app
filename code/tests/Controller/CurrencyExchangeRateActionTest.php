@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Controller;
 
-use App\Client\CurrencyBean\CurrencyBeaconConnector;
+use App\Client\CurrencyBeacon\CurrencyBeaconConnector;
+use App\Client\CurrencyBeacon\Request\CurrencyBeaconLatestRequest;
 use App\Tests\AppTestCase;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
@@ -15,7 +16,7 @@ class CurrencyExchangeRateActionTest extends AppTestCase
     public function testAction(): void
     {
         $mockClient = new MockClient([
-            MockResponse::make(self::getStub('currencybeacon_rub_to_aed_thb_success_response.json')),
+            CurrencyBeaconLatestRequest::class => MockResponse::make(self::getStub('currencybeacon_rub_to_aed_thb_success_response.json')),
         ]);
 
         $connector = self::getObjectFromContainer(CurrencyBeaconConnector::class);
@@ -32,7 +33,7 @@ class CurrencyExchangeRateActionTest extends AppTestCase
         $propertyAccessor = self::getObjectFromContainer(PropertyAccessorInterface::class);
 
         self::assertEquals(0.0401, $propertyAccessor->getValue($decodedData, '[to][AED]'));
-        self::assertEquals(0.3895, $propertyAccessor->isReadable($decodedData, '[to][THB]'));
-        self::assertEquals('RUB', $propertyAccessor->isReadable($decodedData, '[base]'));
+        self::assertEquals(0.3895, $propertyAccessor->getValue($decodedData, '[to][THB]'));
+        self::assertEquals('RUB', $propertyAccessor->getValue($decodedData, '[base]'));
     }
 }

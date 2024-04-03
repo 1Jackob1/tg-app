@@ -1,0 +1,20 @@
+{
+  "ok": true,
+  "result": {
+    "message_id": 100,
+    "from": {
+      "id": 7004899952,
+      "is_bot": true,
+      "first_name": "useful_tools_bot",
+      "username": "my_useful_tools_bot"
+    },
+    "chat": {
+      "id": 111111111,
+      "first_name": "Jackob",
+      "username": "jackobsMonarh",
+      "type": "private"
+    },
+    "date": 1712073964,
+    "text": "Курс для THB:\n1 THB = 2.5001 RUB\n1 THB = 0.0273 USD\nДанные на момент: 2024-04-02 16:06:04"
+  }
+}

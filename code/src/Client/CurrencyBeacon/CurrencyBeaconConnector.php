@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Client\CurrencyBean;
+namespace App\Client\CurrencyBeacon;
 
 use App\AppParametersContainer;
 use Saloon\Http\Connector;

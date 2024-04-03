@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Client\CurrencyBean\Request;
+namespace App\Client\CurrencyBeacon\Request;
 
-use App\Client\CurrencyBean\CurrencyBeaconConnector;
-use App\Client\CurrencyBean\Response\CurrencyBeaconLatestResponse;
+use App\Client\CurrencyBeacon\CurrencyBeaconConnector;
+use App\Client\CurrencyBeacon\Response\CurrencyBeaconLatestResponse;
 use LogicException;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;

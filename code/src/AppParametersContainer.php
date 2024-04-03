@@ -13,5 +13,9 @@ class AppParametersContainer
         public readonly string $currencyBeaconBaseUri,
         #[Autowire('%env(APP_CURRENCY_BEACON_API_KEY)%')]
         public readonly string $currencyBeaconApiKey,
+        #[Autowire('%env(APP_TELEGRAM_BASE_URI)%')]
+        public readonly string $telegramBaseUri,
+        #[Autowire('%env(APP_TELEGRAM_API_KEY)%')]
+        public readonly string $telegramApiKey,
     ) {}
 }
