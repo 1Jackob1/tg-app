@@ -10,7 +10,7 @@ use App\RequestDto\Telegram\TelegramUpdateDto;
 use App\Service\CurrencyService;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 
-// somehow find to auto-inject it to tg webhook handler
+// somehow find how to auto-inject it to tg webhook handler
 #[AutoconfigureTag('app.telegram_exchange_command_handler')]
 readonly class TelegramExchangeCommandHandler
 {

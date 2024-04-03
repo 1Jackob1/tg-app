@@ -1,0 +1,29 @@
+{
+  "update_id": 222222222,
+  "message": {
+    "message_id": 99,
+    "from": {
+      "id": 445624200,
+      "is_bot": false,
+      "first_name": "Jackob",
+      "username": "jackobsMonarh",
+      "language_code": "en",
+      "is_premium": true
+    },
+    "chat": {
+      "id": 111111111,
+      "first_name": "Jackob",
+      "username": "jackobsMonarh",
+      "type": "private"
+    },
+    "date": 1712073961,
+    "text": "/exchange_thb",
+    "entities": [
+      {
+        "offset": 0,
+        "length": 13,
+        "type": "bot_command"
+      }
+    ]
+  }
+}
