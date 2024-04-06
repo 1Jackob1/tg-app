@@ -2,9 +2,9 @@ version: '3'
 
 vars:
   DC_FILE: -f ./docker-compose.yml
-  PROD_APP_TARGET: app_dev
+  PROD_APP_TARGET: app_prod
   PROD_APP_TAG: jackobsmonarch/tg-app:latest
-  PROD_CADDY_TARGET: caddy
+  PROD_CADDY_TARGET: caddy_prod
   PROD_CADDY_TAG: jackobsmonarch/tg-app-caddy:latest
 
 tasks:

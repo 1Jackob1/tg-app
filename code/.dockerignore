@@ -1,0 +1,5 @@
+vendor
+var/cache/dev
+var/cache/test
+var/cache/prod
+var/log

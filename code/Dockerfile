@@ -34,6 +34,18 @@ RUN deluser www-data \
 
 RUN chown www-data:www-data /app
 
+FROM base AS app_prod
+
+USER www-data
+
+ENV APP_ENV=prod
+
+COPY --chown=www-data --link composer.* ./
+
+RUN composer install --prefer-dist --no-dev --no-scripts --no-progress --classmap-authoritative
+
+COPY --chown=www-data --link . ./
+
 FROM base AS app_dev
 
 RUN install-php-extensions \
@@ -44,10 +56,15 @@ COPY --link docker/php/xdebug.ini $PHP_INI_DIR/conf.d/
 
 USER www-data
 
-COPY --chown=www-data . .
+COPY --chown=www-data . ./
 
 RUN composer install
 
 FROM caddy:2.7 as caddy
 
 COPY --from=app_dev /app /app
+
+FROM caddy:2.7 as caddy_prod
+
+COPY --from=app_prod /app /app
+COPY docker/caddy/Caddyfile /etc/caddy/Caddyfile
