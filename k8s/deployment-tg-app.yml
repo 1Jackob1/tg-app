@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tg-app-deployment
+  labels:
+    app: tg-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tg-app
+  template:
+    metadata:
+      labels:
+        app: tg-app
+    spec:
+      containers:
+        - name: tg-app
+          image: jackobsmonarch/tg-app:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9000
+        - name: tg-app-caddy
+          image: jackobsmonarch/tg-app-caddy:latest
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: caddy-configmap
+          volumeMounts:
+            - name: caddyfile
+              mountPath: /etc/caddy/Caddyfile
+              subPath: CONFIG
+      volumes:
+        - name: caddyfile
+          configMap:
+            name: caddy-configmap
