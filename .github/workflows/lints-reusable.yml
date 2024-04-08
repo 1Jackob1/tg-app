@@ -1,0 +1,23 @@
+name: Lints
+
+on:
+    workflow_call:
+        inputs:
+            tag:
+                required: false
+                type: string
+                default: jackobsmonarch/tg-app:${{ (github.event_name == 'pull_request' || github.event_name == 'pull_request_target') && github.head_ref || github.ref_name }}
+
+jobs:
+    lint:
+        runs-on: ubuntu-22.04
+        container:
+            image: ${{ inputs.tag }}
+        defaults:
+            run:
+                working-directory: /app
+        steps:
+            -   name: Code style check
+                run: php vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --allow-risky=yes --dry-run
+            -   name: Static analyze check
+                run: php vendor/bin/phpstan analyse --memory-limit=256M
