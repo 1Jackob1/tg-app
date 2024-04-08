@@ -40,11 +40,9 @@ USER www-data
 
 ENV APP_ENV=prod
 
-COPY --chown=www-data --link composer.* ./
+COPY --chown=www-data --link . ./
 
 RUN composer install --prefer-dist --no-dev --no-scripts --no-progress --classmap-authoritative
-
-COPY --chown=www-data --link . ./
 
 FROM base AS app_dev
 
