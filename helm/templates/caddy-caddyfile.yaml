@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: {{ .Values.caddyConfigName }}
+data:
+    CONFIG: |-
+{{ .Files.Get "Caddyfile" | indent 6 }}

@@ -1,0 +1,37 @@
+appServiceName: tg-app-service
+appDeploymentName: tg-app-deployment
+appEnvsName: tg-app-envs
+appSecretsName: tg-app-secrets
+caddyEnvsName: tg-app-caddy-envs
+caddyConfigName: tg-app-caddy-config
+appReplicas: 1
+appImage: jackobsmonarch/tg-app:latest
+caddyImage: jackobsmonarch/tg-app-caddy:latest
+appServiceType: ClusterIP
+appServiceExposePort: 80
+caddyExposeData:
+    port: 80
+    protocol: TCP
+
+
+appEnvs:
+    APP_CURRENCY_BEACON_BASE_URI: https://api.currencybeacon.com/v1/
+    APP_TELEGRAM_BASE_URI: https://api.telegram.org
+    APP_ENV: prod
+
+appSecrets:
+    APP_CURRENCY_BEACON_API_KEY: ''
+    APP_TELEGRAM_API_KEY: ''
+    APP_REDIS_DSN: ''
+
+caddyEnvs:
+    SERVER_NAME: ':80, caddy:80'
+    APP_URL: 'localhost'
+
+redisExposeData:
+    port: 6379
+    protocol: TCP
+    service:
+        port: 6379
+
+storageClassName: main-storage-ovh

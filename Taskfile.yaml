@@ -74,3 +74,19 @@ tasks:
             - kubectl delete -f ./k8s/deployment-tg-app.yml
             - kubectl delete -f ./k8s/service-tg-app.yml
             - kubectl delete -f ./k8s/ingress.yml
+
+    helm-upgrade:
+        desc: helm upgrade tg-app helm {{.CLI_ARGS}}
+        cmd: helm upgrade tg-app helm {{.CLI_ARGS}}
+
+    helm-install:
+        desc: helm install tg-app helm {{.CLI_ARGS}}
+        cmd: helm install tg-app helm {{.CLI_ARGS}}
+
+    helm-debug:
+        desc: helm template tg-app helm --debug {{.CLI_ARGS}}
+        cmd: helm template tg-app helm --debug {{.CLI_ARGS}}
+
+    helm-uninstall:
+        desc: helm uninstall tg-app helm {{.CLI_ARGS}}
+        cmd: helm uninstall tg-app helm {{.CLI_ARGS}}

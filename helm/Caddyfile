@@ -1,0 +1,15 @@
+{
+  auto_https off
+  admin off
+}
+
+{$SERVER_NAME}
+
+log
+
+route {
+  root * /app/public
+  php_fastcgi {$APP_URL}:9000
+
+  file_server
+}

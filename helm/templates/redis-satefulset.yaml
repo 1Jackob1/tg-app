@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+    {{- include "tgApp.redisName" . | nindent 4 }}
+    labels:
+        {{- include "tgApp.redisSelectorLabels" . | nindent 8 }}
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            {{- include "tgApp.redisSelectorLabels" . | nindent 12 }}
+    template:
+        metadata:
+            {{- include "tgApp.redisName" . | nindent 12 }}
+            labels:
+                {{- include "tgApp.redisSelectorLabels" . | nindent 16 }}
+        spec:
+            containers:
+                -   name: redis
+                    image: redis:7.2.4
+                    imagePullPolicy: IfNotPresent
+                    ports:
+                        -   containerPort: {{ .Values.redisExposeData.port }}
+                            protocol: {{ .Values.redisExposeData.protocol }}
+                    volumeMounts:
+                        -   mountPath: /data
+                            name: redis-volume
+            restartPolicy: Always
+    serviceName: redis-headless
+    volumeClaimTemplates:
+        -   metadata:
+                name: redis-volume
+            spec:
+                accessModes:
+                    - ReadWriteOnce
+                storageClassName: {{ .Values.storageClassName }}
+                resources:
+                    requests:
+                        storage: 5Gi

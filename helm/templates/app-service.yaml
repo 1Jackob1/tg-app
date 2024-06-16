@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: {{ .Values.appServiceName }}
+spec:
+    selector:
+        {{- include "tgApp.appSelectorLabels" . | indent 8 }}
+    type: {{ .Values.appServiceType }}
+    ports:
+        - port: {{ .Values.appServiceExposePort }}
+          protocol: {{ .Values.caddyExposeData.protocol }}
+          targetPort: {{ .Values.caddyExposeData.port }}

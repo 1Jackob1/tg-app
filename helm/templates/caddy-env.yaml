@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: {{ .Values.caddyEnvsName }}
+data:
+{{- range $name, $val := .Values.caddyEnvs }}
+    {{ $name }}: {{ $val | quote }}
+{{- end }}
+
+
