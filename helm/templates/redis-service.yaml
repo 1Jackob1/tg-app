@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: redis-headless
+spec:
+    selector:
+        {{- include "tgApp.redisSelectorLabels" . | nindent 8 }}
+    ports:
+        -   protocol: {{ .Values.redisExposeData.protocol }}
+            port: {{ .Values.redisExposeData.service.port }}
+            targetPort: {{ .Values.redisExposeData.port }}
+    type: ClusterIP
+    clusterIP: None
+

@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: {{ .Values.appDeploymentName }}
+    labels:
+        {{- include "tgApp.appSelectorLabels" . | nindent 8 }}
+spec:
+    replicas: {{ .Values.appReplicas }}
+    selector:
+        matchLabels:
+            {{- include "tgApp.appSelectorLabels" . | nindent 12 }}
+    template:
+        metadata:
+            annotations:
+                {{/* Force restart on each deploy */}}
+                kubectl.kubernetes.io/restartedAt: {{ now | quote }}
+            labels:
+                {{- include "tgApp.appSelectorLabels" . | nindent 16 }}
+        spec:
+            containers:
+                - name: app
+                  image: "{{ .Values.appImage }}"
+                  imagePullPolicy: Always
+                  ports:
+                      - containerPort: 9000
+                  envFrom:
+                      - configMapRef:
+                            name: {{ .Values.appEnvsName }}
+                      - secretRef:
+                            name: {{ .Values.appSecretsName }}
+                - name: caddy
+                  image: "{{ .Values.caddyImage }}"
+                  imagePullPolicy: Always
+                  ports:
+                      - name: http
+                        containerPort: {{ .Values.caddyExposeData.port }}
+                        protocol: {{ .Values.caddyExposeData.protocol }}
+                  envFrom:
+                      - configMapRef:
+                            name: {{ .Values.caddyEnvsName }}
+                  volumeMounts:
+                      - name: caddyfile
+                        mountPath: /etc/caddy/Caddyfile
+                        subPath: CONFIG
+            volumes:
+                - name: caddyfile
+                  configMap:
+                      name: {{ .Values.caddyConfigName }}
