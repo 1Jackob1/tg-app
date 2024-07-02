@@ -90,3 +90,7 @@ tasks:
     helm-uninstall:
         desc: helm uninstall tg-app helm {{.CLI_ARGS}}
         cmd: helm uninstall tg-app helm {{.CLI_ARGS}}
+
+    install-cert-manager:
+        desc: install cert manager to cluster
+        cmd: kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.14.6/cert-manager.yaml {{.CLI_ARGS}}

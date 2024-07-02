@@ -2,8 +2,11 @@ appServiceName: tg-app-service
 appDeploymentName: tg-app-deployment
 appEnvsName: tg-app-envs
 appSecretsName: tg-app-secrets
+appIngressName: tg-app-ingress
 caddyEnvsName: tg-app-caddy-envs
 caddyConfigName: tg-app-caddy-config
+certIssuerName: letsencrypt-prod
+certIssuerSecretName: letsencrypt-prod
 appReplicas: 1
 appImage: jackobsmonarch/tg-app:latest
 caddyImage: jackobsmonarch/tg-app-caddy:latest
@@ -35,3 +38,7 @@ redisExposeData:
         port: 6379
 
 storageClassName: main-storage-ovh
+
+appIngress:
+    host: k8s-playground.abdurashidov.com
+    className: traefik
